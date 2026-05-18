@@ -1,0 +1,21 @@
+
+Source File:
+	DiffusionData.cpp  
+	DiffusionData.h  
+	Graph.cpp  
+	Graph.h  
+	Main.cpp
+
+Command to compile the code:
+	g++ *.cpp
+
+DataSetFile List:
+	filelist  
+
+Dataset Directory:
+	Dataset
+
+Run Script:
+	runall.py
+Command to Execute the script:
+	python3 runall.py filelist
