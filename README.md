@@ -1,74 +1,104 @@
-# Generalized Diffusion Models
+# Generalized Diffusion Models and Rumor Minimization in Signed Social Networks
 
-## Overview
+## Description
 
-This project contains implementations of two graph diffusion models:
+This repository contains implementations of generalized information diffusion models and corresponding rumor minimization algorithms for signed social networks with varying levels of trust and mistrust among individuals.
 
-1. **GLT1DT** – Code for Generalized Diffusion Model
-2. **GSLT1DT** – Code for Generalized Single Threshold Diffusion Model
+The repository includes two diffusion models:
 
-Both models are implemented in C++ and support batch execution over multiple datasets using a Python script.
+- **GLT1DT** – Generalized Diffusion Model
+- **GSLT1DT** – Generalized Single Threshold Diffusion Model
+
+In addition to simulating information propagation, the code provides algorithms for **rumor minimization**, where the objective is to limit the spread of misinformation by strategically selecting influential nodes for positive information dissemination.
+
+The implementation supports experimentation on multiple datasets and provides automated batch execution facilities.
 
 ---
 
-## Project Structure
+# Dataset Information
+
+The repository contains separate directories for each diffusion model.
 
 ```
 .
-├── GLT1DT/                      # Generalized Diffusion Model
+├── GLT1DT/
+│   ├── Dataset/
+│   ├── filelist
+│   ├── runall.py
 │   ├── DiffusionData.cpp
 │   ├── DiffusionData.h
 │   ├── Graph.cpp
 │   ├── Graph.h
-│   ├── Main.cpp
-│   ├── Dataset/                 # Input datasets
-│   ├── filelist                 # List of dataset files
-│   └── runall.py                # Batch execution script
+│   └── Main.cpp
 │
-├── GSLT1DT/                     # Generalized Single Threshold Diffusion Model
+├── GSLT1DT/
+│   ├── Dataset/
+│   ├── filelist
+│   ├── runall.py
 │   ├── DiffusionData.cpp
 │   ├── DiffusionData.h
 │   ├── Graph.cpp
 │   ├── Graph.h
-│   ├── Main.cpp
-│   ├── Dataset/                 # Input datasets
-│   ├── filelist                 # List of dataset files
-│   └── runall.py                # Batch execution script
+│   └── Main.cpp
 │
 └── README.md
 ```
 
+### Dataset Directory
+
+Each model contains a `Dataset/` directory that stores the network datasets used in the experiments.
+
+### Dataset List
+
+The file
+
+```
+filelist
+```
+
+contains the names of the datasets that will be processed during batch execution.
+
 ---
 
-## Directories
+# Code Information
 
-### 1. GLT1DT
+The repository consists of two independent implementations.
 
-Implements the **Generalized Diffusion Model**, which captures information propagation under varying levels of trust and mistrust among individuals in a network.
+## 1. GLT1DT – Generalized Diffusion Model
 
-### 2. GSLT1DT
+This model captures information diffusion in signed social networks under varying levels of trust and mistrust between connected individuals.
 
-Implements the **Generalized Single Threshold Diffusion Model**, a simplified version where each node uses a single threshold to determine activation.
+The implementation also includes algorithms for rumor minimization based on the Generalized Diffusion Model.
+
+---
+
+## 2. GSLT1DT – Generalized Single Threshold Diffusion Model
+
+This model employs a single activation threshold for each node while accounting for varying trust and mistrust relationships.
+
+The implementation includes rumor minimization algorithms based on the Generalized Single Threshold Diffusion Model.
 
 ---
 
 ## Source Files
 
-Both directories contain the following files:
-
 | File | Description |
 |--------|-------------|
-| `DiffusionData.h` | Declarations of diffusion-related data structures. |
-| `DiffusionData.cpp` | Implementation of diffusion data handling functions. |
-| `Graph.h` | Graph class definitions. |
-| `Graph.cpp` | Graph operations and algorithms. |
-| `Main.cpp` | Main driver program. |
+| `DiffusionData.h` | Definitions of data structures and declarations related to diffusion processes. |
+| `DiffusionData.cpp` | Implementation of diffusion-related operations. |
+| `Graph.h` | Graph class definitions and function declarations. |
+| `Graph.cpp` | Implementation of graph algorithms and network operations. |
+| `Main.cpp` | Main driver program for executing diffusion and rumor minimization experiments. |
+| `runall.py` | Python script for running experiments on multiple datasets. |
+| `filelist` | List of dataset files used during batch execution. |
 
 ---
 
-## Compilation
+# Usage Instructions
 
-Navigate to the desired model directory and compile all source files.
+## Step 1: Compile the Source Code
+
+Navigate to the desired model directory.
 
 ### GLT1DT
 
@@ -86,9 +116,9 @@ g++ *.cpp -o diffusion
 
 ---
 
-## Dataset Files
+## Step 2: Prepare the Datasets
 
-All input datasets should be placed inside the corresponding
+Place all input datasets inside the corresponding
 
 ```
 Dataset/
@@ -96,31 +126,25 @@ Dataset/
 
 directory.
 
-The file
+Specify the dataset names in
 
 ```
 filelist
 ```
 
-contains the names of the datasets to be processed.
-
 ---
 
-## Running Experiments
+## Step 3: Execute the Program
 
 ### Single Execution
-
-After compilation:
 
 ```bash
 ./diffusion
 ```
 
----
-
 ### Batch Execution
 
-To execute the program on all datasets listed in `filelist`:
+Run experiments for all datasets listed in `filelist`.
 
 ```bash
 python3 runall.py filelist
@@ -128,44 +152,76 @@ python3 runall.py filelist
 
 ---
 
-## Requirements
+# Requirements
 
-- GNU C++ Compiler (`g++`)
+## Software Requirements
+
+- GNU C++ Compiler (g++)
 - Python 3.x
 
----
+## Operating System
 
-## Example Workflow
-
-### For GLT1DT
-
-```bash
-cd GLT1DT
-g++ *.cpp -o diffusion
-python3 runall.py filelist
-```
-
-### For GSLT1DT
-
-```bash
-cd GSLT1DT
-g++ *.cpp -o diffusion
-python3 runall.py filelist
-```
+The code has been developed and tested on Linux-based systems and should also compile on macOS and Windows systems supporting GCC.
 
 ---
 
-## Models Included
+# Methodology
 
-| Directory | Model |
-|------------|-------|
-| `GLT1DT` | Generalized Diffusion Model |
-| `GSLT1DT` | Generalized Single Threshold Diffusion Model |
+The proposed framework consists of the following stages.
+
+### 1. Network Construction
+
+- Read the input graph from the dataset.
+- Construct a signed social network representation.
+
+### 2. Trust–Mistrust Modeling
+
+- Associate varying levels of trust and mistrust with the relationships between individuals.
+
+### 3. Rumor Propagation
+
+- Initialize rumor seed nodes.
+- Simulate rumor diffusion using the underlying diffusion model.
+
+### 4. Positive Information Propagation
+
+- Select positive seed nodes using the implemented rumor minimization strategies.
+- Propagate positive information throughout the network.
+
+### 5. Node Activation
+
+- Determine node activation according to the diffusion model.
+- In GSLT1DT, each node uses a single activation threshold.
+
+### 6. Rumor Minimization
+
+- Evaluate the effectiveness of positive seeds in suppressing rumor spread.
+- Compute the number of activated nodes and diffusion statistics.
+
+### 7. Experimental Evaluation
+
+- Repeat the process for all datasets specified in `filelist`.
+- Compare the performance of rumor minimization approaches under different diffusion settings.
 
 ---
 
-## Notes
+# License
 
-- Each model has its own dataset directory and execution script.
-- Batch experiments are controlled through the `filelist` file.
-- The code is designed for conducting diffusion and information propagation experiments on network datasets.
+This repository is intended for academic and research purposes.
+
+Users are free to use, modify, and redistribute the code provided that appropriate credit is given to the original authors.
+
+---
+
+# Models Included
+
+| Directory | Description |
+|------------|-------------|
+| **GLT1DT** | Generalized Diffusion Model and Rumor Minimization |
+| **GSLT1DT** | Generalized Single Threshold Diffusion Model and Rumor Minimization |
+
+---
+
+# Keywords
+
+Information Diffusion, Rumor Minimization, Signed Social Networks, Trust and Mistrust, Influence Propagation, Threshold Models, Social Network Analysis, Network Science.
